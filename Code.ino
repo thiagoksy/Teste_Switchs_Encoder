@@ -5,27 +5,27 @@
 #define pin_SW1 18
 #define pin_SW2 19
 
-typedef enum SENTIDO
+typedef enum SENSE
 {
   CLOCKWISE,
   ANTICLOCKWISE
-}sense;
+}ses;
 
 //B3
-void estado_0_15()
+void state_0_15()
 {
   
 }
-void estado_8_7()
+void state_8_7()
 {
   
 }
 //B2
-void estado_12_11()
+void state_12_11()
 {
   
 }
-void estado_4_3()
+void state_4_3()
 {
   
 }
@@ -38,10 +38,10 @@ void setup() {
   pinMode(pin_SW1, INPUT_PULLUP);
   pinMode(pin_SW2, INPUT_PULLUP);
 
-  attachInterrupt(digitalPinToInterrupt(pin_B3), estado_8_7, RISING);
-  attachInterrupt(digitalPinToInterrupt(pin_B3), estado_0_15, FALLING);
-  attachInterrupt(digitalPinToInterrupt(pin_B2), estado_4_3, RISING);
-  attachInterrupt(digitalPinToInterrupt(pino_B2), estado_12_11, FALLING);
+  attachInterrupt(digitalPinToInterrupt(pin_B3), state_8_7, RISING);
+  attachInterrupt(digitalPinToInterrupt(pin_B3), state_0_15, FALLING);
+  attachInterrupt(digitalPinToInterrupt(pin_B2), state_4_3, RISING);
+  attachInterrupt(digitalPinToInterrupt(pino_B2), state_12_11, FALLING);
   
 }
 
