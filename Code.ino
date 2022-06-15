@@ -13,7 +13,7 @@ typedef enum POWER
 {
   OFF,
   ON
-}pow;
+}powe;
 typedef enum ANGLES
 {
   First,
@@ -28,21 +28,26 @@ typedef enum SENSE
 }ses;
 
 //Variables
-int move = CLOCKWISE;
-int Quads[] = (OFF,OFF,OFF,OFF);
+int mov = CLOCKWISE;
+int Quads[] = {0,0,0,0};
 int cicle = 0;
 double distance;
 //***********************************************Functions***********************************************
-void change_sense()
+void change_sense_to_clk()
 {
-  move = !move;
-  cicle++;
+  mov = CLOCKWISE;
+}
+void change_sense_to_aclk()
+{
+  mov = ANTICLOCKWISE;
 }
 
 //B3
 void state_0_15()
 {
   Quads[First]++;
+  if(Quads[First]%4 == 0)
+     cicle++;
 }
 void state_8_7()
 {
@@ -60,6 +65,7 @@ void state_4_3()
 
 //***********************************************Functions Arduino***********************************************
 void setup() {
+  Serial.begin(9600);
   // put your setup code here, to run once:
   pinMode(pin_B3, INPUT_PULLUP);
   pinMode(pin_B2, INPUT_PULLUP);
@@ -70,12 +76,12 @@ void setup() {
 
   attachInterrupt(digitalPinToInterrupt(pin_B3), state_8_7, RISING);
   attachInterrupt(digitalPinToInterrupt(pin_B3), state_0_15, FALLING);
-  attachInterrupt(digitalPinToInterrupt(pin_B2), state_4_3, RISING);
-  attachInterrupt(digitalPinToInterrupt(pino_B2), state_12_11, FALLING);
+  //attachInterrupt(digitalPinToInterrupt(pin_B2), state_4_3, RISING);
+  //attachInterrupt(digitalPinToInterrupt(pin_B2), state_12_11, FALLING);
   
   
-  attachInterrupt(digitalPinToInterrupt(pino_SW1), change_sense, FALLING);
-  attachInterrupt(digitalPinToInterrupt(pino_SW2), change_sense, FALLING);
+  attachInterrupt(digitalPinToInterrupt(pin_SW1), change_sense_to_clk, FALLING);
+  attachInterrupt(digitalPinToInterrupt(pin_SW2), change_sense_to_aclk, FALLING);
     
 }
 
@@ -83,6 +89,12 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if(cicle == 1)
-    distance = Quads[First]*pi*Diameter;
+  Serial.print("Sentido: ");
+  Serial.println(mov);
+  Serial.print("Ciclos: ");
+  Serial.println(cicle);
+  Serial.print("quad1: ");
+  Serial.println(Quads[First]);
+  //if(cicle == 1)
+    //distance = Quads[First]*pi*Diameter;
 }
